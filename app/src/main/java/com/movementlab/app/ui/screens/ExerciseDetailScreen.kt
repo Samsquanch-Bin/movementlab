@@ -45,6 +45,7 @@ import com.movementlab.app.ui.LineChart
 import com.movementlab.app.ui.Nav
 import com.movementlab.app.ui.SectionTitle
 import com.movementlab.app.ui.StatBlock
+import com.movementlab.app.ui.VideoPlayer
 import com.movementlab.app.ui.fmtDateShort
 import com.movementlab.app.ui.fmtValue
 import com.movementlab.app.ui.fmtWeight
@@ -85,12 +86,10 @@ fun ExerciseDetailScreen(vm: AppViewModel, nav: Nav, exerciseId: String) {
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
-            Row(Modifier.fillMaxWidth().padding(top = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Button(onClick = { openUrl(context, e.videoUrl) }, modifier = Modifier.weight(1f).height(52.dp)) {
-                    Icon(Icons.Filled.PlayArrow, null)
-                    Text("Watch demo", fontSize = 16.sp)
-                }
-                IconButton(onClick = { editVideo = true }) { Icon(Icons.Filled.Edit, "Change video link") }
+            VideoPlayer(e.videoUrl, e.name, Modifier.padding(top = 12.dp))
+            TextButton(onClick = { editVideo = true }) {
+                Icon(Icons.Filled.Edit, null)
+                Text(" Use a different video")
             }
 
             if (next != null && vm.readyToProgress(e.id, data)) {
@@ -169,9 +168,13 @@ fun ExerciseDetailScreen(vm: AppViewModel, nav: Nav, exerciseId: String) {
             title = { Text("Demo video link") },
             text = {
                 Column {
-                    Text("Paste a YouTube (or any) link for this move.", style = MaterialTheme.typography.bodySmall)
+                    Text("In YouTube, tap Share → Copy link on any video, then paste it here. It will play inside the app.",
+                        style = MaterialTheme.typography.bodySmall)
                     OutlinedTextField(url, { url = it }, singleLine = true, modifier = Modifier.padding(top = 8.dp))
-                    TextButton(onClick = { url = Seed.youtubeSearch(e.name) }) { Text("Reset to YouTube search") }
+                    TextButton(onClick = { openUrl(context, Seed.youtubeSearch(e.name)) }) { Text("Search YouTube for ${e.name}") }
+                    if (!e.custom) {
+                        TextButton(onClick = { url = Seed.defaultVideo(e.id, e.name) }) { Text("Reset to the built-in video") }
+                    }
                 }
             },
             confirmButton = { TextButton(onClick = { vm.setVideo(e.id, url.trim()); editVideo = false }) { Text("Save") } },

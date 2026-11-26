@@ -5,15 +5,18 @@ import java.net.URLEncoder
 /**
  * Built-in exercise library and starter programs.
  *
- * Demo videos open a YouTube search for the move rather than one hard-coded
- * video, so a link never goes dead. Any exercise's video can be replaced with
- * a specific link from the exercise screen in the app.
+ * Each built-in exercise has a demo video (see [Videos]) that plays inside the
+ * app. Any exercise's video can be replaced from its screen in the app.
  */
 object Seed {
 
     fun youtubeSearch(name: String): String =
         "https://www.youtube.com/results?search_query=" +
             URLEncoder.encode("$name calisthenics proper form tutorial", "UTF-8")
+
+    /** The built-in video for an exercise, or a YouTube search if there isn't one. */
+    fun defaultVideo(id: String, name: String): String =
+        Videos.defaults[id]?.let(Videos::watchUrl) ?: youtubeSearch(name)
 
     private fun ex(
         id: String,
@@ -25,7 +28,7 @@ object Seed {
         equipment: String,
         cues: List<String>,
         tracking: Tracking = Tracking.REPS,
-    ) = Exercise(id, name, category, level, tracking, ladder, step, equipment, cues, youtubeSearch(name), custom = false)
+    ) = Exercise(id, name, category, level, tracking, ladder, step, equipment, cues, defaultVideo(id, name), custom = false)
 
     private val B = Level.BEGINNER
     private val I = Level.INTERMEDIATE

@@ -17,7 +17,7 @@ Every push to `main` builds a new release automatically. Installing a newer APK 
   - Intermediate: Upper / Lower + Skills
   - Advanced: Push / Pull / Legs
 - **~50 exercises** organized into progression ladders (wall push-up → … → one-arm push-up, dead hang → … → archer pull-up, assisted squat → … → pistol, plus dips, muscle-up, L-sit, handstand, front lever, core and mobility).
-- **Demo video** button on every exercise (opens a YouTube search for the move; tap the pencil to save a specific video link).
+- **Demo videos play inside the app** for all 50 exercises (embedded YouTube player with fullscreen), on the exercise screen and mid-workout via the Demo button. Any exercise's video can be swapped by pasting a different YouTube link.
 - **Workout logger** built for mid-set use: big +/− buttons, last session's numbers shown, auto rest timer with vibration, stopwatch for holds, screen stays on.
 - **Added or assisted weight** per set (vest/belt as +, bands as −), in kg or lb.
 - **Easier / Harder** buttons to swap to the neighbouring step of a ladder mid-workout.
@@ -25,7 +25,7 @@ Every push to `main` builds a new release automatically. Installing a newer APK 
 - **Progress:** per-exercise charts and personal records, 12-week calendar, weekly streak, body weight log.
 - **Custom exercises and routines**: copy and edit any built-in routine.
 - **Backup / restore** to a JSON file.
-- Works fully offline; all data stays on the phone.
+- Logging works fully offline and all data stays on the phone (demo videos need a connection).
 
 ## Building
 
@@ -45,5 +45,7 @@ The APK lands in `app/build/outputs/apk/release/`.
 
 - `data/Models.kt`: data classes and JSON storage format
 - `data/Seed.kt`: built-in exercises, ladders and programs (edit here to add moves)
+- `data/Videos.kt`: the YouTube video used for each built-in exercise
+- `ui/VideoPlayer.kt`: in-app YouTube player
 - `data/AppViewModel.kt`: app state, workout logic, progress calculations
 - `ui/screens/`: one file per screen

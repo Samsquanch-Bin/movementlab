@@ -56,6 +56,7 @@ import com.movementlab.app.data.Session
 import com.movementlab.app.data.Tracking
 import com.movementlab.app.ui.Nav
 import com.movementlab.app.ui.Stepper
+import com.movementlab.app.ui.VideoPlayer
 import com.movementlab.app.ui.displayToKg
 import com.movementlab.app.ui.fmtDuration
 import com.movementlab.app.ui.fmtNum
@@ -256,6 +257,7 @@ private fun ExercisePanel(vm: AppViewModel, index: Int, item: ActiveItem, e: Exe
         mutableStateOf(item.logged.lastOrNull()?.weightKg ?: last?.sets?.firstOrNull()?.weightKg ?: 0.0)
     }
     var holdStart by remember(index, e.id) { mutableStateOf<Long?>(null) }
+    var showVideo by remember(e.id) { mutableStateOf(false) }
     var tick by remember { mutableLongStateOf(System.currentTimeMillis()) }
     LaunchedEffect(holdStart) {
         while (holdStart != null) { tick = System.currentTimeMillis(); delay(100) }
@@ -279,13 +281,16 @@ private fun ExercisePanel(vm: AppViewModel, index: Int, item: ActiveItem, e: Exe
         }
 
         Row(Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            OutlinedButton(onClick = { openUrl(context, e.videoUrl) }, modifier = Modifier.weight(1f)) {
-                Icon(Icons.Filled.PlayArrow, null); Text("Demo")
+            OutlinedButton(onClick = { showVideo = !showVideo }, modifier = Modifier.weight(1f)) {
+                Icon(Icons.Filled.PlayArrow, null); Text(if (showVideo) "Hide" else "Demo")
             }
             OutlinedButton(onClick = { easier?.let { vm.swapExercise(index, it.id) } }, enabled = easier != null,
                 modifier = Modifier.weight(1f)) { Text("Easier") }
             OutlinedButton(onClick = { harder?.let { vm.swapExercise(index, it.id) } }, enabled = harder != null,
                 modifier = Modifier.weight(1f)) { Text("Harder") }
+        }
+        if (showVideo) {
+            VideoPlayer(e.videoUrl, e.name, Modifier.padding(top = 8.dp))
         }
 
         // Sets done so far
