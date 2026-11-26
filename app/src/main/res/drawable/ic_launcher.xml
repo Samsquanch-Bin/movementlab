@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Simple launcher icon: orange circle with a pull-up bar and a figure hanging from it. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FFFF7A1A"
+        android:pathData="M54,4a50,50 0,1 1,0 100a50,50 0,1 1,0 -100z" />
+    <path
+        android:fillColor="#FF1B1B1B"
+        android:pathData="M22,28h64v6h-64z" />
+    <path
+        android:fillColor="#FF1B1B1B"
+        android:pathData="M54,46a7,7 0,1 1,0 14a7,7 0,1 1,0 -14z" />
+    <path
+        android:strokeColor="#FF1B1B1B"
+        android:strokeWidth="6"
+        android:strokeLineCap="round"
+        android:pathData="M40,34L46,50M68,34L62,50M54,60L54,78M54,78L46,92M54,78L62,92" />
+</vector>
